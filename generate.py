@@ -13,16 +13,36 @@ my_parser.add_argument('-b',
 my_parser.add_argument('-o',
                        type=str,
                        help='outfile')
+my_parser.add_argument('-btn',
+                       type=str,
+                       help='button label')
+my_parser.add_argument('-title',
+                       type=str,
+                       help='button label')
 
 args = my_parser.parse_args()
+
+# make required args into english
+body = args.b
+out_file = args.o
+
+# make rest of buttons
+if args.title:
+    title = args.title
+else:
+    title = 'Management Action Needed'
+if args.btn:
+    button_label = args.btn
+else:
+    button_label = 'Default Button'
+
+# hand over the window ingredients
 wind = main.mw(
-    'sorry already running',
-    #'Please be v patient the updater is already running',
-    args.b,
-    'great'
+    title,
+    body,
+    button_label
     )
 
-out_file = args.o
 formed_window_command =  main.mw.create(wind)
 bash_header = "#!/bin/sh \n \n"
 do = 'open -a "Self Service.app"'
